@@ -14,6 +14,7 @@ body {
   height: 100vh;
   width: 100%;
   position: relative;
+  background-color: black;
 }
 
 .container {
@@ -43,10 +44,13 @@ body {
   height: 90%;
   width: 70px;
   border-radius: 10px;
-  background-color: black;
+  background-color: rgb(255, 200, 0);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
+  overflow: hidden;
+  border: 5px solid white;
 }
 .row1 {
   padding-left: 30px;
@@ -68,23 +72,25 @@ body {
 .row1 .box {
   transform: rotate(10deg);
 }
-.row2 .box,
-i {
+.row2 .box {
   transform: rotate(0deg);
 }
-.row3 .box,
-i {
+.row3 .box {
   transform: rotate(-10deg);
 }
-.row4 .box,
-i {
+.row4 .box {
   transform: rotate(5deg);
 }
-.row5 .box,
-i {
+.row5 .box {
   transform: rotate(-7deg);
 }
 
-i {
+.box div {
   font-size: 3rem;
+}
+
+.row img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
