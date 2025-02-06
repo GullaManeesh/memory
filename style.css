@@ -87,10 +87,5 @@ body {
 
 .box div {
   font-size: 3rem;
-}
-
-.row img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  display: none;
 }
