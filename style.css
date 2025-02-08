@@ -15,8 +15,22 @@ body {
   width: 100%;
   position: relative;
   background-color: black;
+  overflow: hidden;
 }
 
+.start {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  padding: 1.5em 2em;
+  font-size: 1.5rem;
+  border-radius: 30px;
+  border: 5px solid white;
+  background-color: rgb(255, 200, 0);
+}
 .container {
   width: 60%;
   height: 70%;
@@ -41,6 +55,7 @@ body {
 }
 
 .box {
+  scale: 0;
   height: 90%;
   width: 70px;
   border-radius: 10px;
@@ -48,9 +63,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  overflow: hidden;
   border: 5px solid white;
+  transition: all ease 1s;
 }
 .row1 {
   padding-left: 30px;
@@ -92,4 +106,37 @@ body {
 .box div {
   font-size: 3rem;
   opacity: 0;
+  transform: rotateX(180deg);
+}
+
+.player {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2rem;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.p1 {
+  background-color: #fe3d3d;
+  position: absolute;
+  top: 50%;
+  /* left: -6%; */
+  left: -15%;
+  transform: rotate(90deg) translateX(-50%);
+  padding-bottom: 80px;
+}
+.p2 {
+  position: absolute;
+  top: 50%;
+  /* right: -6%; */
+  right: -15%;
+  transform: translate(-50%);
+  background-color: #4242ff;
+  transform: rotate(270deg) translateX(50%);
+  padding-bottom: 80px;
 }

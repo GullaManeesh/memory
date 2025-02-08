@@ -17,6 +17,12 @@ let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 let container = document.querySelector(".container");
 let start = document.querySelector(".start");
 let i = document.querySelector(".i");
+let clicks = 0;
+let selBoxes = [];
+let iSel = [];
+let selEmojis = [];
+let openBoxes = [];
+
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
@@ -110,17 +116,98 @@ function generateEmojis() {
             <div class="i">${se[5]}</div>
           </div>
         </div>`;
+
+  let boxes = document.querySelectorAll(".box");
+
+  boxes.forEach((box) => {
+    box.addEventListener("click", function () {
+      let selI = box.childNodes[1];
+      if (clicks == 0 || clicks == 1) {
+        clicks += 1;
+      } else {
+        clicks = 1;
+      }
+      Btp(box, selI);
+      checkMatch(box, selI);
+      flipping(box);
+      setTimeout(() => {
+        selI.style.opacity = 1;
+      }, 350);
+    });
+  });
+}
+
+function startDis() {
+  gsap.to(".start", {
+    opacity: 0,
+    display: "none",
+    duration: 0.2,
+  });
+}
+
+function boxDis() {
+  gsap.to(".box", {
+    scale: 1,
+    duration: 0.5,
+    delay: 0.2,
+  });
 }
 
 start.addEventListener("click", () => {
   generateEmojis();
+  boxDis();
+  startDis();
 });
 
-let boxes = document.querySelectorAll(".box");
+function Btp(boxSel, selI) {
+  console.log(clicks);
+  iSel.push(selI);
+  selBoxes.push(boxSel);
+
+  if (clicks == 2) {
+    setTimeout(() => {
+      selBoxes[0].style.transform = "rotateZ(-180deg)";
+      selBoxes[1].style.transform = "rotateZ(-180deg)";
+      setTimeout(() => {
+        iSel[0].style.opacity = 0;
+        iSel[1].style.opacity = 0;
+        iSel.splice(0, 2);
+      }, 350);
+      selBoxes.splice(0, 2);
+    }, 550);
+  }
+}
+
+function checkMatch(box, selI) {
+  selEmojis.push(selI.innerHTML);
+  openBoxes.push(box);
+  console.log(selEmojis);
+  if (clicks == 2) {
+    if (selEmojis[0] === selEmojis[1]) {
+      console.log("match");
+      matchedBoxes(openBoxes);
+    } else {
+      console.log("no match");
+    }
+    setTimeout(() => {
+      openBoxes.splice(0, 2);
+    }, 354);
+    selEmojis.splice(0, 2);
+  }
+}
+function matchedBoxes(openBoxes) {
+  setTimeout(() => {
+    openBoxes[0].style.scale = 0;
+    openBoxes[1].style.scale = 0;
+  }, 350);
+}
+
+function flipping(target) {
+  target.style.transform = "rotateX(180deg)";
+}
 
 container.addEventListener("click", (event) => {
   target = event.target;
   if (target.classList.contains("box") || target.classList.contains("i")) {
-    target.style.opacity = "1";
   }
 });
