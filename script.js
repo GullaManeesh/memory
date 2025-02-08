@@ -119,15 +119,8 @@ start.addEventListener("click", () => {
   generateEmojis();
 });
 
-function showBox() {
-  gsap.to(".box", {
-    transform: "rotate(180deg)",
-  });
-}
-
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
-    showEmoji();
-    showBox();
+    box.style.display = "block";
   });
 });
