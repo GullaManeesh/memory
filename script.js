@@ -16,7 +16,6 @@ let emojis = [
 let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 let container = document.querySelector(".container");
 let start = document.querySelector(".start");
-let boxes = document.querySelectorAll(".box");
 let i = document.querySelector(".i");
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -29,8 +28,6 @@ function shuffleArray(array) {
 function generateEmojis() {
   let se = shuffleArray(emojis);
   let idx = shuffleArray(numbers);
-  console.log(idx);
-  console.log(se);
   container.innerHTML = `<div class="row1 row">
           <div class="box1 box">
             <div class="i">${se[0]}</div>
@@ -119,8 +116,11 @@ start.addEventListener("click", () => {
   generateEmojis();
 });
 
-boxes.forEach((box) => {
-  box.addEventListener("click", () => {
-    box.style.display = "block";
-  });
+let boxes = document.querySelectorAll(".box");
+
+container.addEventListener("click", (event) => {
+  target = event.target;
+  if (target.classList.contains("box") || target.classList.contains("i")) {
+    target.style.opacity = "1";
+  }
 });

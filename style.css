@@ -85,7 +85,11 @@ body {
   transform: rotate(-7deg);
 }
 
+.box:hover {
+  cursor: pointer;
+}
+
 .box div {
   font-size: 3rem;
-  display: none;
+  opacity: 0;
 }
