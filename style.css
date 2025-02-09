@@ -105,7 +105,7 @@ body {
 
 .box div {
   font-size: 3rem;
-  opacity: 0;
+  opacity: 1;
   transform: rotateX(180deg);
 }
 
@@ -139,4 +139,38 @@ body {
   background-color: #4242ff;
   transform: rotate(270deg) translateX(50%);
   padding-bottom: 80px;
+}
+
+.score {
+  position: absolute;
+  top: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100px;
+  width: 100px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  border: 4px solid rgb(255, 200, 0);
+}
+
+.score div {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 35px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.p1score {
+  border-right: 3px solid rgb(255, 200, 0);
+  padding-left: 5px;
+  color: #fe3d3d;
+}
+.p2score {
+  padding-right: 5px;
+  color: #4242ff;
+  border-left: 3px solid rgb(255, 200, 0);
 }

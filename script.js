@@ -17,12 +17,13 @@ let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 let container = document.querySelector(".container");
 let start = document.querySelector(".start");
 let i = document.querySelector(".i");
+let checkBoxes = [];
 let clicks = 0;
 let selBoxes = [];
 let iSel = [];
 let selEmojis = [];
 let openBoxes = [];
-
+let turn = "p1";
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
@@ -121,18 +122,22 @@ function generateEmojis() {
 
   boxes.forEach((box) => {
     box.addEventListener("click", function () {
-      let selI = box.childNodes[1];
-      if (clicks == 0 || clicks == 1) {
-        clicks += 1;
-      } else {
-        clicks = 1;
+      if (checkBoxes.length == 0 || checkBoxes.at(-1) !== box) {
+        checkBoxes.push(box);
+        let selI = box.childNodes[1];
+        if (clicks == 0 || clicks == 1) {
+          clicks += 1;
+        } else {
+          clicks = 1;
+        }
+        Btp(box, selI);
+        checkMatch(box, selI);
+        flipping(box);
+        turnChange();
+        setTimeout(() => {
+          selI.style.opacity = 1;
+        }, 350);
       }
-      Btp(box, selI);
-      checkMatch(box, selI);
-      flipping(box);
-      setTimeout(() => {
-        selI.style.opacity = 1;
-      }, 350);
     });
   });
 }
@@ -152,15 +157,61 @@ function boxDis() {
     delay: 0.2,
   });
 }
+function scoreDis() {
+  gsap.to(".score", {
+    top: "-7%",
+  });
+}
+
+function redDis() {
+  gsap.to(".p1", {
+    left: "-6%",
+  });
+}
+
+function blueDis() {
+  gsap.to(".p2", {
+    right: "-6%",
+  });
+}
+
+function redHide() {
+  gsap.to(".p1", {
+    left: "-15%",
+  });
+}
+
+function blueHide() {
+  gsap.to(".p2", {
+    right: "-15%",
+  });
+}
 
 start.addEventListener("click", () => {
   generateEmojis();
   boxDis();
   startDis();
+  scoreDis();
+  redDis();
 });
 
+console.log(turn);
+function turnChange() {
+  if (clicks == 2) {
+    if (turn === "p1") {
+      turn = "p2";
+      blueDis();
+      redHide();
+    } else {
+      turn = "p1";
+      redDis();
+      blueHide();
+    }
+    console.log("Turn changed to:", turn);
+  }
+}
+
 function Btp(boxSel, selI) {
-  console.log(clicks);
   iSel.push(selI);
   selBoxes.push(boxSel);
 
@@ -181,7 +232,6 @@ function Btp(boxSel, selI) {
 function checkMatch(box, selI) {
   selEmojis.push(selI.innerHTML);
   openBoxes.push(box);
-  console.log(selEmojis);
   if (clicks == 2) {
     if (selEmojis[0] === selEmojis[1]) {
       console.log("match");
