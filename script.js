@@ -348,9 +348,3 @@ function matchedBoxes(openBoxes) {
 function flipping(target) {
   target.style.transform = "rotateX(180deg)";
 }
-
-container.addEventListener("click", (event) => {
-  target = event.target;
-  if (target.classList.contains("box") || target.classList.contains("i")) {
-  }
-});
