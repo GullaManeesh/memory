@@ -157,6 +157,17 @@ function startDis() {
   });
 }
 
+function h1Dis() {
+  gsap.to(".h1", {
+    opacity: 1,
+  });
+}
+function h1Hide() {
+  gsap.to(".h1", {
+    opacity: 0,
+  });
+}
+
 function boxDis() {
   gsap.to(".box", {
     scale: 1,
@@ -206,6 +217,7 @@ start.addEventListener("click", () => {
   startDis();
   scoreDis();
   redDis();
+  h1Hide();
 });
 
 function turnChange(desc) {
@@ -300,6 +312,7 @@ function gameOver() {
   setTimeout(() => {
     res.style.opacity = 0;
     paDis();
+    h1Dis();
   }, 1000);
 }
 
@@ -320,6 +333,7 @@ pa.addEventListener("click", () => {
     startDis();
     scoreDis();
     redDis();
+    h1Hide();
   }, 500);
   paHide();
   p1s = 0;
