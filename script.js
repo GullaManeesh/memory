@@ -17,6 +17,7 @@ let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 let container = document.querySelector(".container");
 let start = document.querySelector(".start");
 let i = document.querySelector(".i");
+let pa = document.querySelector(".pa");
 let checkBoxes = [];
 let clicks = 0;
 let selBoxes = [];
@@ -24,6 +25,12 @@ let iSel = [];
 let selEmojis = [];
 let openBoxes = [];
 let turn = "p1";
+let p1s = 0;
+let p2s = 0;
+let wins = 0;
+let p1score = document.querySelector(".p1score");
+let p2score = document.querySelector(".p2score");
+let res = document.querySelector(".result");
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
@@ -130,10 +137,10 @@ function generateEmojis() {
         } else {
           clicks = 1;
         }
+
         Btp(box, selI);
         checkMatch(box, selI);
         flipping(box);
-        turnChange();
         setTimeout(() => {
           selI.style.opacity = 1;
         }, 350);
@@ -160,6 +167,12 @@ function boxDis() {
 function scoreDis() {
   gsap.to(".score", {
     top: "-7%",
+  });
+}
+
+function scoreHide() {
+  gsap.to(".score", {
+    top: "-15%",
   });
 }
 
@@ -195,19 +208,19 @@ start.addEventListener("click", () => {
   redDis();
 });
 
-console.log(turn);
-function turnChange() {
-  if (clicks == 2) {
+function turnChange(desc) {
+  if (!desc) {
     if (turn === "p1") {
       turn = "p2";
       blueDis();
       redHide();
+      checkBoxes = [];
     } else {
       turn = "p1";
       redDis();
       blueHide();
+      checkBoxes = [];
     }
-    console.log("Turn changed to:", turn);
   }
 }
 
@@ -223,7 +236,7 @@ function Btp(boxSel, selI) {
         iSel[0].style.opacity = 0;
         iSel[1].style.opacity = 0;
         iSel.splice(0, 2);
-      }, 350);
+      }, 300);
       selBoxes.splice(0, 2);
     }, 550);
   }
@@ -234,10 +247,13 @@ function checkMatch(box, selI) {
   openBoxes.push(box);
   if (clicks == 2) {
     if (selEmojis[0] === selEmojis[1]) {
-      console.log("match");
+      turnChange(true);
       matchedBoxes(openBoxes);
+      scoring();
+      wins += 2;
+      result();
     } else {
-      console.log("no match");
+      turnChange(false);
     }
     setTimeout(() => {
       openBoxes.splice(0, 2);
@@ -245,6 +261,83 @@ function checkMatch(box, selI) {
     selEmojis.splice(0, 2);
   }
 }
+
+function result() {
+  setTimeout(() => {
+    if (wins == 24) {
+      if (p1s > p2s) {
+        res.textContent = "RED WINS";
+        res.style.color = "#fe3d3d";
+      } else {
+        res.textContent = "BLUE WINS";
+        res.style.color = "#4242ff";
+      }
+      gameOver();
+    }
+  }, 700);
+}
+function resHide() {
+  gsap.to(".res", {
+    display: "none",
+  });
+}
+
+function paDis() {
+  gsap.to(".pa", {
+    display: "block",
+    delay: 0.5,
+  });
+}
+function paHide() {
+  gsap.to(".pa", {
+    display: "none",
+  });
+}
+function gameOver() {
+  redHide();
+  blueHide();
+  scoreHide();
+  setTimeout(() => {
+    res.style.opacity = 0;
+    paDis();
+  }, 1000);
+}
+
+function scoring() {
+  if (turn == "p1") {
+    p1s += 1;
+    p1score.textContent = p1s;
+  } else if (turn == "p2") {
+    p2s += 1;
+    p2score.textContent = p2s;
+  }
+}
+
+pa.addEventListener("click", () => {
+  setTimeout(() => {
+    generateEmojis();
+    boxDis();
+    startDis();
+    scoreDis();
+    redDis();
+  }, 500);
+  paHide();
+  p1s = 0;
+  p2s = 0;
+  p1score.textContent = p1s;
+  p2score.textContent = p2s;
+  checkBoxes.pop();
+  selBoxes = [];
+  iSel = [];
+  selEmojis = [];
+  openBoxes = [];
+  wins = 0;
+  turn = "p1";
+  clicks = 0;
+  res.style.opacity = 1;
+  res.textContent = "";
+});
+
 function matchedBoxes(openBoxes) {
   setTimeout(() => {
     openBoxes[0].style.scale = 0;
